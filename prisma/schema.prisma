@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Admin user for Dashboard access
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // Hashed password
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Dynamic Site Content (About Us text, Contact info, etc.)
+// We can use a key-value pair approach or specific fields. 
+// Specific fields are often easier to manage in a dashboard form.
+model SiteProfile {
+  id          String   @id @default(uuid())
+  aboutText   String   @db.Text
+  aboutImage  String?  // URL to image
+  toursHeroImage String? // Custom background for Tours page
+  toursHeroColor String? @default("#172554") // Default: blue-950
+  galleryHeroImage String? // Custom background for Gallery page
+  galleryHeroColor String? @default("#042f2e") // Default: teal-950
+  aboutHeroImage String? // Custom background for About page
+  aboutHeroColor String? @default("#0f172a") // Default: slate-900
+  email       String
+  phone       String
+  address     String?
+  facebookUrl String?
+  instagramUrl String?
+  
+  // SEO Management
+  siteTitle       String?  @default("Silvin Lanka - Explore Sri Lanka")
+  siteDescription String?  @db.Text
+  keywords        String?  @db.Text // Comma separated
+
+  updatedAt   DateTime @updatedAt
+}
+
+// Simple Analytics
+model Visit {
+  id        String   @id @default(uuid())
+  page      String
+  ipHash    String?  // Optional: hashed IP for unique visit estimation
+  userAgent String?
+  createdAt DateTime @default(now())
+}
+
+// Tour Packages
+model Tour {
+  id          String    @id @default(uuid())
+  title       String
+  description String    @db.Text
+  price       Decimal   @db.Decimal(10, 2)
+  duration    String    // e.g., "3 Days / 2 Nights"
+  location    String    // Primary destination
+  images      Json?     // Array of image URLs stored as JSON
+  locations   Json?     // Array of {lat, lng, name?} objects
+  isFeatured  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Blog/Gallery items (Destinations)
+model Destination {
+  id          String   @id @default(uuid())
+  title       String
+  description String?  @db.Text
+  imageUrl    String?  // Deprecated: Migrating to 'images'
+  images      Json?    // Array of image strings
+  locations   Json?    // Array of multiple locations
+  latitude    Float?   // For map markers
+  longitude   Float?
+  createdAt   DateTime @default(now())
+}
+
+// User Reviews
+model Review {
+  id          String   @id @default(uuid())
+  name        String
+  rating      Int      // 1-5
+  comment     String   @db.Text
+  facebookUrl String?
+  instagramUrl String?
+  tiktokUrl   String?
+  isApproved  Boolean  @default(false) // Needs Admin approval
+  createdAt   DateTime @default(now())
+}
