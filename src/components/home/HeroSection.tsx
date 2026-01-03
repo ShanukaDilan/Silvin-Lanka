@@ -5,12 +5,24 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-export function HeroSection() {
+interface HeroProps {
+    title?: string;
+    subtitle?: string;
+    description?: string;
+    backgroundImage?: string;
+}
+
+export function HeroSection({
+    title = "Travel Beyond The Ordinary",
+    subtitle = "Welcome to Sri Lanka",
+    description = "Discover the hidden gems of the pearl of the Indian Ocean. From mist-covered mountains to pristine beaches, your journey begins here.",
+    backgroundImage = "/images/hero.png"
+}: HeroProps) {
     return (
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 z-0">
                 <Image
-                    src="/images/hero.png"
+                    src={backgroundImage}
                     alt="Beautiful Sri Lanka Landscape"
                     fill
                     className="object-cover"
@@ -26,25 +38,31 @@ export function HeroSection() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="text-lg md:text-2xl font-light mb-4 uppercase tracking-[0.2em]"
                 >
-                    Welcome to Sri Lanka
+                    {subtitle}
                 </motion.h2>
                 <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight leading-tight md:leading-none"
-                >
-                    Travel Beyond<br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-teal-200">The Ordinary</span>
-                </motion.h1>
+                    dangerouslySetInnerHTML={{
+                        __html: title.includes("The Ordinary") ? title.replace("The Ordinary", `<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-teal-200">The Ordinary</span>`) : title
+                    }}
+                />
+                {/* Fallback for title if no HTML injection needed: 
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-teal-200">The Ordinary</span> 
+                    Logic above is a quick hack to preserve the gradient specific to the default text. 
+                    Ideally, we'd have a separate field for 'HighlightedText' or 'GradientText'. 
+                    For now, let's just render the title text directly if it doesn't match the default pattern or just trust the user input.
+                */}
+
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
                     className="text-lg md:text-xl text-slate-100 mb-12 max-w-2xl mx-auto font-light leading-relaxed"
                 >
-                    Discover the hidden gems of the pearl of the Indian Ocean.
-                    From mist-covered mountains to pristine beaches, your journey begins here.
+                    {description}
                 </motion.p>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

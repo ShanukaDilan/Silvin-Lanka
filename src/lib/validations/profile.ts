@@ -9,6 +9,7 @@ export const siteProfileSchema = z.object({
     galleryHeroColor: z.string().regex(/^#[0-9a-fA-F]{6}$/, "Invalid hex color").optional(),
     aboutHeroImage: z.string().optional(),
     aboutHeroColor: z.string().regex(/^#[0-9a-fA-F]{6}$/, "Invalid hex color").optional(),
+    navColor: z.string().regex(/^#[0-9a-fA-F]{6}$/, "Invalid hex color").default("#ffffff"),
     email: z.string().email("Invalid email address"),
     phone: z.string().min(10, "Phone number must be at least 10 characters"),
     address: z.string().optional(),

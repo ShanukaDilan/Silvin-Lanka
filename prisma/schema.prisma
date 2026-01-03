@@ -39,7 +39,10 @@ model SiteProfile {
   // SEO Management
   siteTitle       String?  @default("Silvin Lanka - Explore Sri Lanka")
   siteDescription String?  @db.Text
+
   keywords        String?  @db.Text // Comma separated
+
+  navColor        String?  @default("#ffffff") // Custom Navbar Color
 
   updatedAt   DateTime @updatedAt
 }
@@ -92,4 +95,42 @@ model Review {
   tiktokUrl   String?
   isApproved  Boolean  @default(false) // Needs Admin approval
   createdAt   DateTime @default(now())
+}
+
+// Dynamic Home Page Content
+model HomePage {
+  id String @id @default(uuid())
+
+  // Hero Section
+  heroTitle       String   @default("Travel Beyond The Ordinary")
+  heroSubtitle    String   @default("Welcome to Sri Lanka")
+  heroDescription String   @db.Text 
+  heroImage       String   @default("/images/hero.png")
+
+  // Why Choose Us Section
+  whyChooseUsTitle String @default("Why Choose Silvin Lanka?")
+  // Stored as JSON: [{ icon: "Leaf", title: "...", description: "..." }]
+  whyChooseUsFeatures Json?
+
+  // Newsletter Section
+  newsletterTitle       String @default("Ready to start your adventure?")
+  newsletterDescription String @db.Text
+
+  // Popular Destinations Section
+  destinationsTitle    String @default("Popular Destinations")
+  destinationsSubtitle String @default("Explore our most visited locations, curated just for you.")
+  
+  popularDestinations  Json?
+
+  // Featured Tours Section
+  featuredToursTitle    String @default("Featured Packages")
+  featuredToursSubtitle String @default("Hand-picked experiences tailored to perfection.")
+
+  // Testimonials Section
+  testimonialsTitle    String @default("What Our Guests Say")
+  testimonialsSubtitle String @default("Real stories from real travelers.")
+  // Stored as JSON: [{ name: "John Doe", role: "Traveler", comment: "...", avatar: "..." }]
+  testimonials         Json?
+
+  updatedAt DateTime @updatedAt
 }

@@ -1,0 +1,1 @@
+Unconditional log added to admin page. docker-compose checked.

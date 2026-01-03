@@ -17,15 +17,26 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
     const [isUploading, setIsUploading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
-    const form = useForm<SiteProfileFormValues>({
+    const form = useForm({
         resolver: zodResolver(siteProfileSchema),
-        defaultValues: initialData || {
-            aboutText: "",
-            email: "",
-            phone: "",
-            address: "",
-            facebookUrl: "",
-            instagramUrl: "",
+        defaultValues: {
+            aboutText: initialData?.aboutText || "",
+            email: initialData?.email || "",
+            phone: initialData?.phone || "",
+            address: initialData?.address || "",
+            facebookUrl: initialData?.facebookUrl || "",
+            instagramUrl: initialData?.instagramUrl || "",
+            aboutImage: initialData?.aboutImage || undefined,
+            toursHeroImage: initialData?.toursHeroImage || undefined,
+            toursHeroColor: initialData?.toursHeroColor || undefined,
+            galleryHeroImage: initialData?.galleryHeroImage || undefined,
+            galleryHeroColor: initialData?.galleryHeroColor || undefined,
+            aboutHeroImage: initialData?.aboutHeroImage || undefined,
+            aboutHeroColor: initialData?.aboutHeroColor || undefined,
+            navColor: initialData?.navColor || "#ffffff",
+            siteTitle: initialData?.siteTitle || "",
+            siteDescription: initialData?.siteDescription || "",
+            keywords: initialData?.keywords || "",
         },
     });
 
@@ -55,6 +66,18 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-2xl bg-white p-6 rounded-2xl shadow-sm">
             <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-slate-800">General Information</h2>
+
+                <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Navbar Color</label>
+                    <div className="flex items-center gap-3">
+                        <input
+                            type="color"
+                            {...form.register("navColor")}
+                            className="h-10 w-20 p-1 rounded border border-slate-300 cursor-pointer"
+                        />
+                        <span className="text-sm text-slate-600">Primary overlay color (Glass effect will be applied automatically)</span>
+                    </div>
+                </div>
 
                 <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">About Us Image</label>

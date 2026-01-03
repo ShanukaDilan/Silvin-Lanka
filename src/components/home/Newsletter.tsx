@@ -2,7 +2,15 @@
 
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
-export function Newsletter() {
+interface NewsletterProps {
+    title?: string;
+    description?: string;
+}
+
+export function Newsletter({
+    title = "Ready to start your adventure?",
+    description = "Sign up for our newsletter to get the latest travel tips, special offers, and hidden gems of Sri Lanka delivered to your inbox."
+}: NewsletterProps) {
     return (
         <section className="py-24 relative overflow-hidden">
             <div className="absolute inset-0 bg-blue-900 z-0">
@@ -10,9 +18,9 @@ export function Newsletter() {
             </div>
             <div className="max-w-4xl mx-auto px-4 relative z-10 text-center text-white">
                 <AnimatedSection>
-                    <h2 className="text-4xl font-bold mb-6">Ready to start your adventure?</h2>
+                    <h2 className="text-4xl font-bold mb-6">{title}</h2>
                     <p className="text-lg md:text-xl text-blue-100 mb-10">
-                        Sign up for our newsletter to get the latest travel tips, special offers, and hidden gems of Sri Lanka delivered to your inbox.
+                        {description}
                     </p>
                     <form className="max-w-md mx-auto flex flex-col sm:flex-row gap-4" onSubmit={(e) => e.preventDefault()}>
                         <input

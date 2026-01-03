@@ -6,7 +6,7 @@ import { ArrowRight, Clock, MapPin } from "lucide-react";
 export async function FeaturedTours() {
     const tours = await getFeaturedTours();
 
-    if (tours.length === 0) {
+    if (!tours || tours.length === 0) {
         return (
             <div className="text-center py-12 bg-white rounded-2xl border border-slate-100 shadow-sm mx-4">
                 <p className="text-slate-500">No featured tours available at the moment.</p>
