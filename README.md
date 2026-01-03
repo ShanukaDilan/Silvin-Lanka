@@ -1,3 +1,32 @@
+Welcome to the Silvin Lanka Wiki!
+Silvin Lanka is a robust web application built to serve as a comprehensive guide for tourism in Sri Lanka. It bridges the gap between travelers and the rich experiences Sri Lanka has to offer through a unified digital platform.
+
+🌟 Vision
+To create a "Travel Beyond The Ordinary" experience where users can seamlessly explore destinations, book tours, and read authentic reviews, while administrators have full control over the platform's content.
+
+📚 Documentation Sections
+1. Installation & Setup
+Learn how to set up the project locally or using Docker. Includes prerequisite checks and environment configuration.
+
+2. Architecture
+Overview of the Next.js App Router structure, Prisma database schema, and authentication flow.
+
+3. User Guide
+For Travelers: How to browse tours, submit reviews, and contact support.
+For Admins: How to manage tours, approve reviews, and update site content.
+
+5. Deployment
+Guidelines for deploying the application to production environments like Vercel or a VPS with Docker.
+
+🚀 Quick Links
+GitHub Repository: ShanukaDilan/Silvin-Lanka
+Live Demo: [Coming Soon]
+🤝 Contribution
+Contributions are welcome! Please check the 
+Contributing Guidelines
+ before submitting a Pull Request.
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
