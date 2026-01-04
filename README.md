@@ -1,65 +1,97 @@
+# Silvin Lanka 🇱🇰
+> *Travel Beyond The Ordinary - Explore Sri Lanka with Us*
+
 Welcome to the Silvin Lanka Wiki!
 Silvin Lanka is a robust web application built to serve as a comprehensive guide for tourism in Sri Lanka. It bridges the gap between travelers and the rich experiences Sri Lanka has to offer through a unified digital platform.
 
 🌟 Vision
 To create a "Travel Beyond The Ordinary" experience where users can seamlessly explore destinations, book tours, and read authentic reviews, while administrators have full control over the platform's content.
 
-📚 Documentation Sections
-1. Installation & Setup
-Learn how to set up the project locally or using Docker. Includes prerequisite checks and environment configuration.
+**Silvin Lanka** is a modern, full-stack tourism platform designed to showcase the beauty of Sri Lanka. It features a high-performance public website for tourists to browse tours and destinations, and a comprehensive admin dashboard for easier content management.
 
-2. Architecture
-Overview of the Next.js App Router structure, Prisma database schema, and authentication flow.
+![Project Status](https://img.shields.io/badge/status-active-success.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-3. User Guide
-For Travelers: How to browse tours, submit reviews, and contact support.
-For Admins: How to manage tours, approve reviews, and update site content.
+## 🚀 Key Features
 
-5. Deployment
-Guidelines for deploying the application to production environments like Vercel or a VPS with Docker.
+### Public Portal
+- **Dynamic Content**: Home page, tours, and destinations are fully dynamic and managed via the dashboard.
+- **Tour Packages**: Browse detailed tour packages with itineraries, pricing, and locations.
+- **Interactive Maps**: Integrated maps (Leaflet) to show tour locations and destinations.
+- **Tours Gallery**: Visual galleries for destinations.
+- **Reviews**: User-submitted reviews with approval workflow.
+- **Responsive Design**: Mobile-first architecture using Tailwind CSS.
 
-🚀 Quick Links
-GitHub Repository: ShanukaDilan/Silvin-Lanka
-Live Demo: [Coming Soon]
-🤝 Contribution
-Contributions are welcome! Please check the 
-Contributing Guidelines
- before submitting a Pull Request.
+### Admin Dashboard
+- **Content Management**: Update Home page sections (Hero, Why Choose Us, Testimonials).
+- **Tour Management**: Create, edit, and delete tour packages.
+- **Site Profile**: Manage global site settings like contact info, social links, and SEO metadata.
+- **Analytics**: Basic visit tracking.
+- **Secure Access**: Protected routes with credentials-based authentication.
 
+## 🛠 Tech Stack
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4, Framer Motion
+- **Database**: MySQL 8.0
+- **ORM**: Prisma
+- **Auth**: NextAuth.js
+- **Containerization**: Docker & Docker Compose
+- **Maps**: Leaflet / React-Leaflet
 
-## Getting Started
+## 🐳 Getting Started (Docker)
 
-First, run the development server:
+The easiest way to run the application is using Docker.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ShanukaDilan/Silvin-Lanka.git
+   cd Silvin-Lanka
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Setup Environment Variables**
+   Create a `.env` file in the root directory (or use the existing one):
+   ```bash
+   DATABASE_URL=mysql://root:password@db:3306/silvin_lanka
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your_secret_key
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Run with Docker Compose**
+   ```bash
+   docker-compose up --build
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **Access the App**
+   - Public Site: [http://localhost:3000](http://localhost:3000)
+   - Admin Login: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
 
-## Learn More
+## 💻 Local Development
 
-To learn more about Next.js, take a look at the following resources:
+If you prefer running without Docker:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Database Setup**
+   Ensure you have a local MySQL instance running and update `DATABASE_URL` in `.env`.
+   ```bash
+   npx prisma migrate dev
+   npx prisma db seed
+   ```
 
-## Deploy on Vercel
+3. **Run Dev Server**
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📂 Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app/(public)`: Public-facing pages (Home, Tours, About, Contact).
+- `src/app/(admin)`: Protected admin dashboard pages.
+- `src/components`: Reusable UI components.
+- `src/lib`: Utilities, database clients, and validation schemas.
+- `prisma`: Database schema and seed data.

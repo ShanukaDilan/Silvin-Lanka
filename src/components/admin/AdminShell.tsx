@@ -13,7 +13,8 @@ import {
     LogOut,
     Menu,
     X,
-    ChevronRight
+    ChevronRight,
+    Home
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { ModernButton } from "@/components/ui/FormElements";
@@ -22,6 +23,7 @@ import { ModernButton } from "@/components/ui/FormElements";
 const SIDEBAR_ITEMS = [
     { title: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { title: "Tours", href: "/admin/tours", icon: Map },
+    { title: "Home Page", href: "/admin/home-page", icon: Home },
     { title: "Blog & Gallery", href: "/admin/gallery", icon: ImageIcon },
     { title: "Reviews", href: "/admin/reviews", icon: MessageSquare },
     { title: "Site Profile", href: "/admin/profile", icon: Settings },
@@ -120,12 +122,12 @@ export function AdminShell({ children, user }: { children: React.ReactNode, user
                                 ))}
 
                                 <p className="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-6">Management</p>
-                                {SIDEBAR_ITEMS.slice(1, 4).map((item) => (
+                                {SIDEBAR_ITEMS.slice(1, 5).map((item) => (
                                     <SidebarItem key={item.href} item={item} isActive={pathname === item.href} />
                                 ))}
 
                                 <p className="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-6">System</p>
-                                {SIDEBAR_ITEMS.slice(4).map((item) => (
+                                {SIDEBAR_ITEMS.slice(5).map((item) => (
                                     <SidebarItem key={item.href} item={item} isActive={pathname === item.href} />
                                 ))}
                             </div>

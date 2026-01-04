@@ -11,6 +11,7 @@ import {
     Settings,
     LogOut,
     User,
+    Home,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 
@@ -24,6 +25,11 @@ const sidebarItems = [
         title: "Tours",
         href: "/admin/tours",
         icon: Map,
+    },
+    {
+        title: "Home Page",
+        href: "/admin/home-page",
+        icon: Home,
     },
     {
         title: "Blog & Gallery",
