@@ -16,8 +16,6 @@ export default async function AboutPage() {
         if (!fs.existsSync(filePath)) {
             heroImage = 'https://placehold.co/1920x600/1e293b/ffffff?text=About+Us';
         }
-    } else if (heroImage.includes('unsplash')) {
-        heroImage = 'https://placehold.co/1920x600/1e293b/ffffff?text=About+Us';
     }
 
     const validHeroImage = heroImage;

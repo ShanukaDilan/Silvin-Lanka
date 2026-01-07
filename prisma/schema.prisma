@@ -7,130 +7,104 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Admin user for Dashboard access
 model Admin {
   id        String   @id @default(uuid())
   email     String   @unique
-  password  String   // Hashed password
+  password  String
   name      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-// Dynamic Site Content (About Us text, Contact info, etc.)
-// We can use a key-value pair approach or specific fields. 
-// Specific fields are often easier to manage in a dashboard form.
 model SiteProfile {
-  id          String   @id @default(uuid())
-  aboutText   String   @db.Text
-  aboutImage  String?  // URL to image
-  toursHeroImage String? // Custom background for Tours page
-  toursHeroColor String? @default("#172554") // Default: blue-950
-  galleryHeroImage String? // Custom background for Gallery page
-  galleryHeroColor String? @default("#042f2e") // Default: teal-950
-  aboutHeroImage String? // Custom background for About page
-  aboutHeroColor String? @default("#0f172a") // Default: slate-900
-  email       String
-  phone       String
-  address     String?
-  facebookUrl String?
-  instagramUrl String?
-  
-  // SEO Management
-  siteTitle       String?  @default("Silvin Lanka - Explore Sri Lanka")
-  siteDescription String?  @db.Text
-
-  keywords        String?  @db.Text // Comma separated
-
-  navColor        String?  @default("#ffffff") // Custom Navbar Color
-
-  updatedAt   DateTime @updatedAt
+  id               String   @id @default(uuid())
+  aboutText        String   @db.Text
+  aboutImage       String?
+  toursHeroImage   String?
+  toursHeroColor   String?  @default("#172554")
+  galleryHeroImage String?
+  galleryHeroColor String?  @default("#042f2e")
+  aboutHeroImage   String?
+  aboutHeroColor   String?  @default("#0f172a")
+  contactHeroImage String?
+  contactHeroColor String?  @default("#0f172a")
+  reviewsHeroImage String?
+  reviewsHeroColor String?  @default("#f59e0b")
+  email            String
+  phone            String
+  address          String?
+  facebookUrl      String?
+  instagramUrl     String?
+  siteTitle        String?  @default("Silvin Lanka - Explore Sri Lanka")
+  siteDescription  String?  @db.Text
+  keywords         String?  @db.Text
+  navColor         String?  @default("#ffffff")
+  updatedAt        DateTime @updatedAt
 }
 
-// Simple Analytics
 model Visit {
   id        String   @id @default(uuid())
   page      String
-  ipHash    String?  // Optional: hashed IP for unique visit estimation
+  ipHash    String?
   userAgent String?
   createdAt DateTime @default(now())
 }
 
-// Tour Packages
 model Tour {
-  id          String    @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String
-  description String    @db.Text
-  price       Decimal   @db.Decimal(10, 2)
-  duration    String    // e.g., "3 Days / 2 Nights"
-  location    String    // Primary destination
-  images      Json?     // Array of image URLs stored as JSON
-  locations   Json?     // Array of {lat, lng, name?} objects
-  isFeatured  Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  description String   @db.Text
+  price       Decimal  @db.Decimal(10, 2)
+  duration    String
+  location    String
+  images      Json?
+  locations   Json?
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
-// Blog/Gallery items (Destinations)
 model Destination {
   id          String   @id @default(uuid())
   title       String
   description String?  @db.Text
-  imageUrl    String?  // Deprecated: Migrating to 'images'
-  images      Json?    // Array of image strings
-  locations   Json?    // Array of multiple locations
-  latitude    Float?   // For map markers
+  imageUrl    String?
+  images      Json?
+  locations   Json?
+  latitude    Float?
   longitude   Float?
   createdAt   DateTime @default(now())
 }
 
-// User Reviews
 model Review {
-  id          String   @id @default(uuid())
-  name        String
-  rating      Int      // 1-5
-  comment     String   @db.Text
-  facebookUrl String?
+  id           String   @id @default(uuid())
+  name         String
+  rating       Int
+  comment      String   @db.Text
+  facebookUrl  String?
   instagramUrl String?
-  tiktokUrl   String?
-  isApproved  Boolean  @default(false) // Needs Admin approval
-  createdAt   DateTime @default(now())
+  tiktokUrl    String?
+  isApproved   Boolean  @default(false)
+  createdAt    DateTime @default(now())
 }
 
-// Dynamic Home Page Content
 model HomePage {
-  id String @id @default(uuid())
-
-  // Hero Section
-  heroTitle       String   @default("Travel Beyond The Ordinary")
-  heroSubtitle    String   @default("Welcome to Sri Lanka")
-  heroDescription String   @db.Text 
-  heroImage       String   @default("/images/hero.png")
-
-  // Why Choose Us Section
-  whyChooseUsTitle String @default("Why Choose Silvin Lanka?")
-  // Stored as JSON: [{ icon: "Leaf", title: "...", description: "..." }]
-  whyChooseUsFeatures Json?
-
-  // Newsletter Section
-  newsletterTitle       String @default("Ready to start your adventure?")
-  newsletterDescription String @db.Text
-
-  // Popular Destinations Section
-  destinationsTitle    String @default("Popular Destinations")
-  destinationsSubtitle String @default("Explore our most visited locations, curated just for you.")
-  
-  popularDestinations  Json?
-
-  // Featured Tours Section
-  featuredToursTitle    String @default("Featured Packages")
-  featuredToursSubtitle String @default("Hand-picked experiences tailored to perfection.")
-
-  // Testimonials Section
-  testimonialsTitle    String @default("What Our Guests Say")
-  testimonialsSubtitle String @default("Real stories from real travelers.")
-  // Stored as JSON: [{ name: "John Doe", role: "Traveler", comment: "...", avatar: "..." }]
-  testimonials         Json?
-
-  updatedAt DateTime @updatedAt
+  id                    String   @id @default(uuid())
+  heroTitle             String   @default("Travel Beyond The Ordinary")
+  heroSubtitle          String   @default("Welcome to Sri Lanka")
+  heroDescription       String   @db.Text
+  heroImage             String   @default("/images/hero.png")
+  whyChooseUsTitle      String   @default("Why Choose Silvin Lanka?")
+  whyChooseUsFeatures   Json?
+  newsletterTitle       String   @default("Ready to start your adventure?")
+  newsletterDescription String   @db.Text
+  destinationsTitle     String   @default("Popular Destinations")
+  destinationsSubtitle  String   @default("Explore our most visited locations, curated just for you.")
+  popularDestinations   Json?
+  featuredToursTitle    String   @default("Featured Packages")
+  featuredToursSubtitle String   @default("Hand-picked experiences tailored to perfection.")
+  testimonialsTitle     String   @default("What Our Guests Say")
+  testimonialsSubtitle  String   @default("Real stories from real travelers.")
+  testimonials          Json?
+  updatedAt             DateTime @updatedAt
 }

@@ -1,17 +1,59 @@
 import { getApprovedReviews } from "@/app/actions/review";
 import { ReviewForm } from "@/components/reviews/ReviewForm";
-import { Star, Facebook, Instagram, Video, Quote } from "lucide-react";
+import { Star, Facebook, Instagram, Video, Quote, Sparkles } from "lucide-react";
+import { getSiteProfile } from "@/app/actions/profile";
+import Image from "next/image";
+import fs from "fs";
+import path from "path";
 
 export const dynamic = "force-dynamic";
 
 export default async function ReviewsPage() {
     const reviews = await getApprovedReviews();
+    const profile = await getSiteProfile();
+
+    let heroImage = profile?.reviewsHeroImage || 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?q=80&w=2070&auto=format&fit=crop';
+
+    // Validate uploaded image existence
+    if (heroImage.startsWith('/uploads/')) {
+        const filePath = path.join(process.cwd(), 'public', heroImage);
+        if (!fs.existsSync(filePath)) {
+            heroImage = 'https://placehold.co/1920x600/f59e0b/ffffff?text=Guest+Reviews';
+        }
+    }
+
+    const validHeroImage = heroImage;
 
     return (
         <div className="bg-white min-h-screen">
-            <div className="relative h-[300px] flex items-center justify-center bg-amber-500">
-                <div className="absolute inset-0 bg-black/20" />
-                <h1 className="relative z-10 text-4xl md:text-5xl font-bold text-white">Guest Reviews</h1>
+            {/* Hero Section */}
+            <div className="relative h-[400px] flex items-center justify-center overflow-hidden">
+                <div
+                    className="absolute inset-0"
+                    style={{ backgroundColor: profile?.reviewsHeroColor || '#f59e0b' }}
+                >
+                    {/* Dynamic Hero Image */}
+                    <div className="absolute inset-0">
+                        <Image
+                            src={validHeroImage}
+                            alt="Reviews Hero"
+                            fill
+                            className="object-cover opacity-60 mix-blend-overlay"
+                            priority
+                        />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                </div>
+                <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-100 text-sm font-medium mb-6 backdrop-blur-sm animate-fade-in-up">
+                        <Sparkles className="w-4 h-4 text-amber-300" />
+                        <span>Trusted by Travelers</span>
+                    </div>
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight drop-shadow-md animate-fade-in-up-delay-1">Guest Reviews</h1>
+                    <p className="text-lg md:text-xl text-slate-100 max-w-2xl mx-auto leading-relaxed animate-fade-in-up-delay-2 font-light">
+                        Real stories from real travelers who explored Sri Lanka with us.
+                    </p>
+                </div>
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

@@ -21,9 +21,6 @@ export default async function ToursPage() {
             // console.log(`Hero image not found at: ${filePath}, falling back.`);
             heroImage = 'https://placehold.co/1920x600/1e293b/ffffff?text=Explore+Sri+Lanka';
         }
-    } else if (heroImage.includes('unsplash')) {
-        // Fallback for potentially broken unsplash default
-        heroImage = 'https://placehold.co/1920x600/1e293b/ffffff?text=Explore+Sri+Lanka';
     }
 
     const validHeroImage = heroImage;

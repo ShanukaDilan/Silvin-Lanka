@@ -10,7 +10,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=mysql://root:password@db:3306/silvin_lanka
+      - DATABASE_URL=mysql://root:password@db:3306/tourlk
       - NEXTAUTH_URL=http://localhost:3000
       - NEXTAUTH_SECRET=changeme
     depends_on:

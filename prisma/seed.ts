@@ -100,6 +100,37 @@ async function main() {
         }
     })
 
+    // Seed Site Profile
+    const siteProfile = await prisma.siteProfile.upsert({
+        where: { id: 'initial-profile' },
+        update: {},
+        create: {
+            id: 'initial-profile',
+            aboutText: 'Welcome to Silvin Lanka. We offer the best tours in Sri Lanka.',
+            aboutImage: '',
+            toursHeroImage: '',
+            toursHeroColor: '#172554',
+            galleryHeroImage: '',
+            galleryHeroColor: '#042f2e',
+            aboutHeroImage: '',
+            aboutHeroColor: '#0f172a',
+            contactHeroImage: '',
+            contactHeroColor: '#0f172a',
+            reviewsHeroImage: '',
+            reviewsHeroColor: '#f59e0b',
+            email: 'info@silvinlanka.com',
+            phone: '+94 77 123 4567',
+            address: '123, Main Street, Colombo, Sri Lanka',
+            facebookUrl: '',
+            instagramUrl: '',
+            siteTitle: 'Silvin Lanka - Explore Sri Lanka',
+            siteDescription: 'Discover the hidden gems of Sri Lanka with our expert guides.',
+            keywords: 'travel, tours, sri lanka, guide',
+            navColor: '#ffffff',
+        }
+    })
+
+    console.log({ siteProfile })
     console.log({ homePage })
 }
 

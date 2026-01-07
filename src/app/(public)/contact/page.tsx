@@ -1,17 +1,55 @@
 import { getSiteProfile } from "@/app/actions/profile";
 import { Mail, Phone, MapPin, Facebook, Instagram } from "lucide-react";
+import Image from "next/image";
+import fs from "fs";
+import path from "path";
 
 export const dynamic = "force-dynamic";
 
 export default async function ContactPage() {
     const profile = await getSiteProfile();
 
+    let heroImage = profile?.contactHeroImage || 'https://images.unsplash.com/photo-1534536281715-e28d76689b4d?q=80&w=2070&auto=format&fit=crop';
+
+    // Validate uploaded image existence
+    if (heroImage.startsWith('/uploads/')) {
+        const filePath = path.join(process.cwd(), 'public', heroImage);
+        if (!fs.existsSync(filePath)) {
+            heroImage = 'https://placehold.co/1920x600/1e293b/ffffff?text=Contact+Us';
+        }
+    }
+
+    const validHeroImage = heroImage;
+
     return (
         <div className="bg-white">
-            <div className="relative h-[400px] flex items-center justify-center">
-                <div className="absolute inset-0 bg-slate-900" />
-                <div className="absolute inset-0 bg-black/50" />
-                <h1 className="relative z-10 text-4xl md:text-5xl font-bold text-white">Contact Us</h1>
+            {/* Hero Section */}
+            <div className="relative h-[400px] flex items-center justify-center overflow-hidden">
+                <div
+                    className="absolute inset-0"
+                    style={{ backgroundColor: profile?.contactHeroColor || '#0f172a' }}
+                >
+                    {/* Dynamic Hero Image */}
+                    <div className="absolute inset-0">
+                        <Image
+                            src={validHeroImage}
+                            alt="Contact Hero"
+                            fill
+                            className="object-cover opacity-60 mix-blend-overlay"
+                            priority
+                        />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                </div>
+                <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-500/30 border border-slate-400/30 text-slate-100 text-sm font-medium mb-6 backdrop-blur-sm animate-fade-in-up">
+                        <span>Get in Touch</span>
+                    </div>
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight drop-shadow-md animate-fade-in-up-delay-1">Contact Us</h1>
+                    <p className="text-lg md:text-xl text-slate-100 max-w-2xl mx-auto leading-relaxed animate-fade-in-up-delay-2 font-light">
+                        We're here to help you plan your perfect Sri Lankan adventure.
+                    </p>
+                </div>
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
