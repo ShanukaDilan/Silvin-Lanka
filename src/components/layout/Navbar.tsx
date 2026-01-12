@@ -75,7 +75,7 @@ export function Navbar({ navColor }: { navColor?: string }) {
                     {/* Logo */}
                     <div className="flex-shrink-0">
                         <Link href="/" className="flex items-center">
-                            <span className={`text-2xl font-bold tracking-wider transition-colors ${logoColorClass}`}>
+                            <span className={`text-xl md:text-2xl font-bold tracking-wider transition-colors ${logoColorClass}`}>
                                 SILVIN LANKA
                             </span>
                         </Link>

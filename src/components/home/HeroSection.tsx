@@ -31,12 +31,12 @@ export function HeroSection({
                 <div className="absolute inset-0 bg-black/30 w-full h-full" />
             </div>
 
-            <div className="relative z-20 text-center text-white px-4 max-w-5xl mx-auto mt-16">
+            <div className="relative z-20 text-center text-white px-4 max-w-5xl mx-auto mt-0 sm:mt-16">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-lg md:text-2xl font-light mb-4 uppercase tracking-[0.2em]"
+                    className="text-base sm:text-lg md:text-2xl font-light mb-4 uppercase tracking-[0.2em]"
                 >
                     {subtitle}
                 </motion.h2>
