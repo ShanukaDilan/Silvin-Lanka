@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface HeroProps {
@@ -32,14 +32,18 @@ export function HeroSection({
             </div>
 
             <div className="relative z-20 text-center text-white px-4 max-w-5xl mx-auto mt-0 sm:mt-16">
-                <motion.h2
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-base sm:text-lg md:text-2xl font-light mb-4 uppercase tracking-[0.2em]"
+                    className="flex justify-center mb-6"
                 >
-                    {subtitle}
-                </motion.h2>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-sm sm:text-base font-medium text-white shadow-lg">
+                        <Sparkles className="w-4 h-4 text-blue-300" />
+                        <span>{subtitle}</span>
+                    </div>
+                </motion.div>
+
                 <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -49,12 +53,6 @@ export function HeroSection({
                         __html: title.includes("The Ordinary") ? title.replace("The Ordinary", `<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-teal-200">The Ordinary</span>`) : title
                     }}
                 />
-                {/* Fallback for title if no HTML injection needed: 
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-teal-200">The Ordinary</span> 
-                    Logic above is a quick hack to preserve the gradient specific to the default text. 
-                    Ideally, we'd have a separate field for 'HighlightedText' or 'GradientText'. 
-                    For now, let's just render the title text directly if it doesn't match the default pattern or just trust the user input.
-                */}
 
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
