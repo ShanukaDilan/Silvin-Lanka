@@ -25,7 +25,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
     const images = (tour.images as string[]) || [];
 
     return (
-        <div className="bg-white min-h-screen pb-24">
+        <div className="bg-slate-900 min-h-screen pb-24 pt-20">
             {/* Hero Gallery */}
             {/* Hero Gallery */}
 
@@ -99,41 +99,43 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                    {/* Main Content */}
-                    <div className="lg:col-span-2 space-y-12">
-                        <div>
-                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Overview</h2>
-                            <p className="text-slate-600 leading-relaxed whitespace-pre-wrap text-lg">
-                                {tour.description}
-                            </p>
+            <div className="bg-white py-12">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                        {/* Main Content */}
+                        <div className="lg:col-span-2 space-y-12">
+                            <div>
+                                <h2 className="text-2xl font-bold text-slate-900 mb-4">Overview</h2>
+                                <p className="text-slate-600 leading-relaxed whitespace-pre-wrap text-lg">
+                                    {tour.description}
+                                </p>
+                            </div>
+
+                            {/* Map Section */}
+                            {(tour as any).locations && Array.isArray((tour as any).locations) && ((tour as any).locations as any[]).length > 0 && (
+                                <div>
+                                    <h2 className="text-2xl font-bold text-slate-900 mb-4">Tour Route</h2>
+                                    <TourMapWrapper locations={(tour as any).locations as any[]} />
+                                </div>
+                            )}
                         </div>
 
-                        {/* Map Section */}
-                        {(tour as any).locations && Array.isArray((tour as any).locations) && ((tour as any).locations as any[]).length > 0 && (
-                            <div>
-                                <h2 className="text-2xl font-bold text-slate-900 mb-4">Tour Route</h2>
-                                <TourMapWrapper locations={(tour as any).locations as any[]} />
-                            </div>
-                        )}
-                    </div>
+                        {/* Sidebar */}
+                        <div className="space-y-8">
+                            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 sticky top-24">
+                                <h3 className="text-xl font-bold text-slate-900 mb-4">Book This Tour</h3>
+                                <p className="text-slate-600 mb-6">Interested in this experience? Contact us to customize and book your trip.</p>
 
-                    {/* Sidebar */}
-                    <div className="space-y-8">
-                        <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 sticky top-24">
-                            <h3 className="text-xl font-bold text-slate-900 mb-4">Book This Tour</h3>
-                            <p className="text-slate-600 mb-6">Interested in this experience? Contact us to customize and book your trip.</p>
-
-                            <div className="space-y-4">
-                                <Link
-                                    href="/contact"
-                                    className="block w-full py-3 bg-blue-600 text-white text-center rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                                >
-                                    Contact Us
-                                </Link>
-                                <div className="text-center text-sm text-slate-500">
-                                    or call us at <span className="font-semibold text-slate-700">+94 77 123 4567</span>
+                                <div className="space-y-4">
+                                    <Link
+                                        href="/contact"
+                                        className="block w-full py-3 bg-blue-600 text-white text-center rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                                    >
+                                        Contact Us
+                                    </Link>
+                                    <div className="text-center text-sm text-slate-500">
+                                        or call us at <span className="font-semibold text-slate-700">+94 77 123 4567</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
