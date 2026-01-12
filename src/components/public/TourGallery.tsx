@@ -87,6 +87,7 @@ export function TourGallery({ images, title }: TourGalleryProps) {
                 {/* Indicators & Actions */}
 
                 {/* Dots - Bottom Center on Mobile, Bottom Left on Desktop */}
+                {/* Dots - Bottom Center on Mobile, Bottom Left on Desktop */}
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-8 md:bottom-8 flex gap-2 z-20">
                     {images.map((_, index) => (
                         <button
@@ -100,14 +101,13 @@ export function TourGallery({ images, title }: TourGalleryProps) {
                 </div>
 
                 {/* View All Button - Top Right on Mobile, Bottom Right on Desktop */}
-                <div className="absolute top-4 right-4 md:top-auto md:bottom-8 md:right-8 z-20">
+                <div className="absolute top-4 right-4 z-30">
                     <button
                         onClick={() => setIsLightboxOpen(true)}
-                        className="flex items-center gap-2 px-4 py-2 bg-black/20 backdrop-blur-md hover:bg-black/40 text-white rounded-full text-xs md:text-sm font-semibold transition-all border border-white/10 shadow-lg hover:scale-105"
+                        className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-md hover:bg-black/60 text-white rounded-full text-xs md:text-sm font-semibold transition-all border border-white/20 shadow-lg hover:scale-105"
                     >
-                        <Grid className="w-3 h-3 md:w-4 md:h-4" />
-                        <span className="hidden md:inline">View All Photos ({images.length})</span>
-                        <span className="md:hidden">{images.length}</span>
+                        <Grid className="w-4 h-4" />
+                        <span>Gallery View ({images.length})</span>
                     </button>
                 </div>
             </div>

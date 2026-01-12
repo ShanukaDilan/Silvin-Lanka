@@ -72,22 +72,27 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             <div className="relative">
                 <TourGallery images={images} title={tour.title} />
 
-                <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 max-w-7xl mx-auto pointer-events-auto">
-                        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 drop-shadow-lg leading-tight">{tour.title}</h1>
-                        <div className="flex flex-wrap gap-4 md:gap-6 text-white/90 font-medium text-sm md:text-base">
-                            <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/10">
-                                <Clock className="w-4 h-4 md:w-5 md:h-5 text-blue-300" />
-                                <span>{tour.duration}</span>
-                            </div>
-                            <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/10">
-                                <MapPin className="w-5 h-5 text-teal-300" />
-                                <span>{tour.location}</span>
-                            </div>
-                            <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/10">
-                                <DollarSign className="w-5 h-5 text-amber-300" />
-                                <span className="text-xl font-bold">${Number(tour.price).toFixed(2)}</span>
+                <div className="absolute inset-0 pointer-events-none z-10">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-12 max-w-7xl mx-auto pointer-events-auto">
+                        <div className="flex flex-col gap-4">
+                            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 drop-shadow-lg leading-tight">
+                                {tour.title}
+                            </h1>
+
+                            <div className="flex flex-wrap items-center gap-3 text-white/90 font-medium text-xs sm:text-sm md:text-base">
+                                <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                                    <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-300" />
+                                    <span>{tour.duration}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                                    <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-300" />
+                                    <span>{tour.location}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 bg-amber-500/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-amber-500/30">
+                                    <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300" />
+                                    <span className="font-bold text-amber-100">${Number(tour.price).toFixed(0)}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
