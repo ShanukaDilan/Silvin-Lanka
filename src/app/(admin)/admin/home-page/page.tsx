@@ -380,6 +380,13 @@ export default function HomePageAdmin() {
                         ))}
                     </div>
                 </div>
+                {/* Save Button Bottom */}
+                <div className="flex justify-end pt-6 border-t border-slate-200">
+                    <ModernButton onClick={handleSubmit(onSubmit, (errors) => console.log("Form Errors:", errors))} disabled={saving}>
+                        {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                        Save Changes
+                    </ModernButton>
+                </div>
             </form>
         </div>
     );
