@@ -100,7 +100,7 @@ export function Navbar({ navColor }: { navColor?: string }) {
                                 {pathname === item.href && (
                                     <motion.span
                                         layoutId="navbar-underline"
-                                        className={`absolute bottom-0 left-0 w-full h-0.5 ${underlineClass}`}
+                                        className={`absolute bottom-0 left-0 w-full h-0.5 ${underlineClass} hidden sm:block`}
                                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                     />
                                 )}

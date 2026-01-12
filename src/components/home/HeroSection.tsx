@@ -19,7 +19,7 @@ export function HeroSection({
     backgroundImage = "/images/hero.png"
 }: HeroProps) {
     return (
-        <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden py-20">
             <div className="absolute inset-0 z-0">
                 <Image
                     src={backgroundImage}

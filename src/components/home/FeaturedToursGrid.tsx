@@ -68,14 +68,14 @@ export function FeaturedToursGrid({ tours }: { tours: Tour[] }) {
                     </div>
 
                     <div className="p-5 flex flex-col flex-grow">
-                        <div className="flex items-center gap-4 text-xs text-slate-500 mb-3 font-medium">
-                            <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-md">
-                                <Clock className="w-3.5 h-3.5 text-blue-500" />
+                        <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 mb-3 font-medium">
+                            <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-md whitespace-nowrap">
+                                <Clock className="w-3.5 h-3.5 text-blue-500 flex-shrink-0" />
                                 {tour.duration}
                             </div>
-                            <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-md">
-                                <MapPin className="w-3.5 h-3.5 text-blue-500" />
-                                {tour.location}
+                            <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-md whitespace-nowrap max-w-[140px]">
+                                <MapPin className="w-3.5 h-3.5 text-blue-500 flex-shrink-0" />
+                                <span className="truncate">{tour.location}</span>
                             </div>
                         </div>
 
