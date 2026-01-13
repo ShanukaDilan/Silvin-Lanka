@@ -42,6 +42,11 @@ const sidebarItems = [
         icon: MessageSquare,
     },
     {
+        title: "Media Manager",
+        href: "/admin/media",
+        icon: ImageIcon,
+    },
+    {
         title: "Site Profile",
         href: "/admin/profile",
         icon: Settings,
