@@ -64,9 +64,11 @@ export default async function AboutPage() {
                         </div>
                     )}
 
-                    <div className="whitespace-pre-wrap">
-                        {profile?.aboutText || "Welcome to Silvin Lanka. We are dedicated to providing the best travel experiences in Sri Lanka."}
-                    </div>
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: profile?.aboutText || "<p>Welcome to Silvin Lanka. We are dedicated to providing the best travel experiences in Sri Lanka.</p>"
+                        }}
+                    />
                 </div>
             </div>
         </div>
