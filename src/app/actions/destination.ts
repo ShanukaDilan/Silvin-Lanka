@@ -29,6 +29,7 @@ export async function createDestination(data: DestinationFormValues) {
 
         revalidatePath("/admin/gallery");
         revalidatePath("/");
+        revalidatePath("/admin/media");
         return { success: true };
     } catch (error) {
         console.error("Create destination error:", error);
@@ -83,6 +84,7 @@ export async function updateDestination(id: string, data: DestinationFormValues)
 
         revalidatePath("/admin/gallery");
         revalidatePath("/");
+        revalidatePath("/admin/media");
         return { success: true };
     } catch (error) {
         console.error("Update destination error:", error);
@@ -112,6 +114,7 @@ export async function deleteDestination(id: string) {
         await prisma.destination.delete({ where: { id } });
         revalidatePath("/admin/gallery");
         revalidatePath("/");
+        revalidatePath("/admin/media");
         return { success: true };
     } catch (error) {
         console.error("Delete destination error:", error);

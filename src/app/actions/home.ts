@@ -45,6 +45,7 @@ export async function updateHomePage(data: any) {
         });
 
         revalidatePath("/");
+        revalidatePath("/admin/media");
         return { success: true, data: updated };
     } catch (error) {
         console.error("Error updating home page:", error);

@@ -91,6 +91,7 @@ export async function updateSiteProfile(data: SiteProfileFormValues) {
         revalidatePath("/gallery");
         revalidatePath("/reviews");
         revalidatePath("/tours");
+        revalidatePath("/admin/media");
 
         return { success: true };
     } catch (error: any) {

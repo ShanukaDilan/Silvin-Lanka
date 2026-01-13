@@ -25,6 +25,7 @@ export async function createTour(data: TourFormValues) {
 
         revalidatePath("/admin/tours");
         revalidatePath("/");
+        revalidatePath("/admin/media");
         return { success: true };
     } catch (error) {
         console.error("Create tour error:", error);
@@ -76,6 +77,8 @@ export async function updateTour(id: string, data: TourFormValues) {
 
         revalidatePath("/admin/tours");
         revalidatePath("/");
+        revalidatePath("/admin/media");
+        revalidatePath("/admin/media");
         return { success: true };
     } catch (error) {
         console.error("Update tour error:", error);
@@ -105,6 +108,7 @@ export async function deleteTour(id: string) {
         await prisma.tour.delete({ where: { id } });
         revalidatePath("/admin/tours");
         revalidatePath("/");
+        revalidatePath("/admin/media");
         return { success: true };
     } catch (error) {
         console.error("Delete tour error:", error);
