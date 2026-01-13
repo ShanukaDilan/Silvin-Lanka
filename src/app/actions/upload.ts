@@ -1,6 +1,7 @@
 "use server";
 
 import { saveImage } from "@/lib/upload";
+import { revalidatePath } from "next/cache";
 
 export async function uploadImageAction(formData: FormData) {
     const file = formData.get("file") as File;
@@ -11,6 +12,7 @@ export async function uploadImageAction(formData: FormData) {
 
     try {
         const url = await saveImage(file);
+        revalidatePath("/admin/media");
         return { url };
     } catch (error) {
         console.error("Upload error:", error);
@@ -38,6 +40,7 @@ export async function uploadImagesAction(formData: FormData) {
         // Filter out any nulls if file validation failed inside map (though basic check is above)
         const validUrls = urls.filter((url): url is string => url !== null);
 
+        revalidatePath("/admin/media");
         return { urls: validUrls };
     } catch (error) {
         console.error("Bulk upload error:", error);

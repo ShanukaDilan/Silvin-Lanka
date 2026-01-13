@@ -11,18 +11,23 @@ export default function MediaManagerPage() {
     const [deleting, setDeleting] = useState<string | null>(null);
     const [filter, setFilter] = useState<"all" | "active" | "unused">("all");
     const [search, setSearch] = useState("");
+    const [debugPath, setDebugPath] = useState<string>("");
+    const [errorMsg, setErrorMsg] = useState<string>("");
 
     useEffect(() => {
         loadFiles();
     }, []);
 
     async function loadFiles() {
+        setLoading(true);
         try {
-            setLoading(true);
             const data = await getMediaFiles();
-            setFiles(data);
+            setFiles(data.files);
+            setDebugPath(data.debugPath);
+            if (data.error) setErrorMsg(data.error);
         } catch (error) {
             console.error("Failed to load files", error);
+            setErrorMsg("Failed to load files");
         } finally {
             setLoading(false);
         }
@@ -139,6 +144,12 @@ export default function MediaManagerPage() {
                     </div>
                     <p className="text-lg font-medium text-white">No files found</p>
                     <p className="text-sm">Try adjusting your filters or upload some images.</p>
+                    {debugPath && (
+                        <div className="mt-4 text-xs font-mono text-slate-500 bg-slate-900/50 p-2 rounded inline-block max-w-md break-all">
+                            Scanned: {debugPath}
+                            {errorMsg && <div className="text-red-400 mt-1">Error: {errorMsg}</div>}
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
