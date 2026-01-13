@@ -23,7 +23,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const FormLabel = ({ children, className, ...props }: React.LabelHTMLAttributes<HTMLLabelElement>) => (
     <label
-        className={cn("block text-sm font-medium text-slate-700 mb-1.5 ml-1", className)}
+        className={cn("block text-sm font-medium text-slate-800 mb-1.5 ml-1", className)}
         {...props}
     >
         {children}
@@ -44,8 +44,8 @@ export const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
                     <input
                         ref={ref}
                         className={cn(
-                            "flex w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm transition-all duration-200",
-                            "placeholder:text-slate-400",
+                            "flex w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 transition-all duration-200",
+                            "placeholder:text-slate-500",
                             "focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-teal-500/10",
                             "hover:border-slate-300",
                             "disabled:cursor-not-allowed disabled:opacity-50",
@@ -71,8 +71,8 @@ export const FormTextarea = React.forwardRef<HTMLTextAreaElement, React.Textarea
                 <textarea
                     ref={ref}
                     className={cn(
-                        "flex min-h-[120px] w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm transition-all duration-200",
-                        "placeholder:text-slate-400",
+                        "flex min-h-[120px] w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 transition-all duration-200",
+                        "placeholder:text-slate-500",
                         "focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-teal-500/10",
                         "hover:border-slate-300",
                         "resize-y",

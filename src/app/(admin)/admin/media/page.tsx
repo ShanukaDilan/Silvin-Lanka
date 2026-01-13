@@ -75,7 +75,7 @@ export default function MediaManagerPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-white">Media Manager</h1>
-                    <p className="text-slate-400 mt-1">Manage your uploaded files and clean up unused assets.</p>
+                    <p className="text-slate-300 mt-1">Manage your uploaded files and clean up unused assets.</p>
                 </div>
 
                 <div className="flex gap-2">
@@ -110,14 +110,14 @@ export default function MediaManagerPage() {
                     placeholder="Search files..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                    <div className="text-slate-400 text-sm mb-1">Total Files</div>
+                    <div className="text-slate-200 text-sm mb-1">Total Files</div>
                     <div className="text-2xl font-bold text-white">{files.length}</div>
                 </div>
                 <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
@@ -125,7 +125,7 @@ export default function MediaManagerPage() {
                     <div className="text-2xl font-bold text-white">{files.filter(f => f.isActive).length}</div>
                 </div>
                 <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                    <div className="text-slate-400 text-sm mb-1">Unused Files</div>
+                    <div className="text-slate-200 text-sm mb-1">Unused Files</div>
                     <div className="text-2xl font-bold text-white">{files.filter(f => !f.isActive).length}</div>
                 </div>
             </div>
@@ -162,8 +162,8 @@ export default function MediaManagerPage() {
                                         onClick={() => handleDelete(file.name)}
                                         disabled={deleting === file.name || file.isActive}
                                         className={`p-2 rounded-full transition-transform hover:scale-110 ${file.isActive
-                                                ? "bg-slate-600/50 text-slate-400 cursor-not-allowed"
-                                                : "bg-red-500 text-white hover:bg-red-600"
+                                            ? "bg-slate-600/50 text-slate-400 cursor-not-allowed"
+                                            : "bg-red-500 text-white hover:bg-red-600"
                                             }`}
                                         title={file.isActive ? "Cannot delete active file" : "Delete file"}
                                     >
