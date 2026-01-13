@@ -89,7 +89,7 @@ export default function GalleryDetailPage({ params }: PageProps) {
             className="bg-slate-50 min-h-screen pb-20"
         >
             {/* Header Section with subtle gradient */}
-            <div className="bg-white border-b border-slate-100 shadow-sm relative overflow-hidden pt-20">
+            <div className="bg-white relative overflow-hidden pt-20">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-teal-500 to-emerald-500"></div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 text-center relative z-10">
