@@ -52,10 +52,42 @@ export function Navbar({ navColor }: { navColor?: string }) {
         ? `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${bgOpacity})`
         : `rgba(255, 255, 255, ${bgOpacity})`;
 
+    // Check for pages that have a light background (no dark hero image)
+    // - Gallery Detail pages: /gallery/[id] (where id is not empty)
+    // - Reviews page
+    // - Auth pages (signin)
+    const isLightPage =
+        (pathname.startsWith('/gallery/') && pathname.split('/').length > 2) ||
+        pathname === '/reviews' ||
+        pathname.startsWith('/auth') ||
+        pathname.startsWith('/api/auth');
+
     // Text Color Logic:
     // If NOT scrolled (Hero): Always White (assuming Hero is dark/image)
+    // UNLESS it's a light page, then default to dark text immediately.
     // If Scrolled: Calculate based on navColor luminance
-    const shouldUseDarkText = isScrolled && useDarkText(navColor || "#ffffff");
+    const shouldUseDarkText = isLightPage || (isScrolled && useDarkText(navColor || "#ffffff"));
+
+    // Background Logic:
+    // If it's a light page, we might want a solid background or at least visible one even at top?
+    // User said "cannot see nav when page loading".
+    // For light pages, let's force a white background with shadow if not scrolled, or just rely on dark text on transparent (if background is white).
+    // Actually, Gallery Detail has `bg-white` and `pt-20`. So `fixed` nav needs to be `bg-white` or transparent.
+    // If transparent + dark text, it works on white background.
+    // But if we want it to look like a "bar", we can add bg.
+    // Let's stick to transparent + dark text at top, and glass + dark text on scroll.
+
+    const bgOpacity = isScrolled ? 0.9 : (isLightPage ? 0.95 : 0.1);
+    // Wait, if I set opacity 0.95 for light page at top, it will be a white bar.
+    // User said "top of page cannot see". They probably meant the text was white on white.
+    // So `shouldUseDarkText = true` fixes the visibility.
+    // But `bgOpacity` being high ensures it doesn't blend if there is content scrolling under?
+    // If `pt-20` is set, content starts below. So nav is over white background.
+
+    const bgColor = rgb
+        ? `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${bgOpacity})`
+        : `rgba(255, 255, 255, ${bgOpacity})`;
+
     const textColorClass = shouldUseDarkText ? "text-slate-900" : "text-white";
     const hoverColorClass = shouldUseDarkText ? "hover:text-slate-700" : "hover:text-white/80";
     const underlineClass = shouldUseDarkText ? "bg-slate-900" : "bg-white";
