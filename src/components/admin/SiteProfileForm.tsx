@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { siteProfileSchema, SiteProfileFormValues } from "@/lib/validations/profile";
 import { updateSiteProfile } from "@/app/actions/profile";
@@ -8,6 +8,7 @@ import { uploadImageAction } from "@/app/actions/upload";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
+import { RichTextEditor } from "@/components/ui/RichTextEditor";
 
 interface SiteProfileFormProps {
     initialData?: SiteProfileFormValues & { id?: string };
@@ -85,7 +86,7 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
             (errors) => {
                 console.error("Form validation errors:", errors);
             }
-        )} className="space-y-6 max-w-2xl bg-white p-6 rounded-2xl shadow-sm">
+        )} className="space-y-6 max-w-5xl bg-white p-6 rounded-2xl shadow-sm">
             {Object.keys(form.formState.errors).length > 0 && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                     <h3 className="text-red-800 font-semibold mb-2">Please fix the following errors:</h3>
@@ -429,11 +430,16 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
 
                 <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">About Text</label>
-                    <textarea
-                        {...form.register("aboutText")}
-                        rows={5}
-                        className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                        placeholder="Tell us about your company..."
+                    <Controller
+                        name="aboutText"
+                        control={form.control}
+                        render={({ field }) => (
+                            <RichTextEditor
+                                value={field.value || ""}
+                                onChange={field.onChange}
+                                placeholder="Tell us about your company..."
+                            />
+                        )}
                     />
                     {form.formState.errors.aboutText && (
                         <p className="text-red-500 text-sm mt-1">{form.formState.errors.aboutText.message}</p>
@@ -448,7 +454,7 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
                         id="email"
                         {...form.register("email")}
                         type="email"
-                        className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
                     />
                     {form.formState.errors.email && (
                         <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -459,7 +465,7 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
                     <input
                         id="phone"
                         type="text"
-                        className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
                         {...form.register("phone")}
                     />
                     {form.formState.errors.phone && (
@@ -473,7 +479,7 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
                 <input
                     {...form.register("address")}
                     type="text"
-                    className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
                 />
             </div>
 
@@ -485,7 +491,7 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
                         <input
                             {...form.register("facebookUrl")}
                             type="url"
-                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
                             placeholder="https://facebook.com/..."
                         />
                         {form.formState.errors.facebookUrl && (
@@ -497,7 +503,7 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
                         <input
                             {...form.register("instagramUrl")}
                             type="url"
-                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
                             placeholder="https://instagram.com/..."
                         />
                         {form.formState.errors.instagramUrl && (
@@ -514,7 +520,7 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
                         <label className="block text-sm font-medium text-slate-700 mb-1">Site Title</label>
                         <input
                             {...form.register("siteTitle")}
-                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
                             placeholder="Silvin Lanka - Explore Sri Lanka"
                         />
                     </div>
@@ -523,7 +529,7 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
                         <textarea
                             {...form.register("siteDescription")}
                             rows={3}
-                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
                             placeholder="A brief description for search engines..."
                         />
                     </div>
@@ -531,7 +537,7 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
                         <label className="block text-sm font-medium text-slate-700 mb-1">Keywords</label>
                         <input
                             {...form.register("keywords")}
-                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
                             placeholder="travel, tours, sri lanka, guide..."
                         />
                         <p className="text-xs text-slate-500 mt-1">Separate keywords with commas.</p>
