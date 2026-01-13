@@ -2,7 +2,11 @@
 
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { Bold, Italic, Heading1, Heading2, Heading3 } from 'lucide-react';
+import TextAlign from '@tiptap/extension-text-align';
+import {
+    Bold, Italic, Heading1, Heading2, Heading3,
+    AlignLeft, AlignCenter, AlignRight, AlignJustify
+} from 'lucide-react';
 
 interface RichTextEditorProps {
     value: string;
@@ -17,6 +21,9 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
                 heading: {
                     levels: [1, 2, 3],
                 },
+            }),
+            TextAlign.configure({
+                types: ['heading', 'paragraph'],
             }),
         ],
         content: value,
@@ -36,7 +43,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
     }
 
     // Determine active states for styling
-    const isActive = (type: string, options?: any) => editor.isActive(type, options);
+    const isActive = (type: string | Record<string, any>, options?: any) => editor.isActive(type as any, options);
 
     return (
         <div className="border border-slate-200 rounded-lg overflow-hidden bg-white">
@@ -82,8 +89,42 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
                 >
                     <Heading3 className="w-4 h-4" />
                 </button>
+
+                <div className="w-px h-6 bg-slate-300 mx-1 self-center" />
+                <button
+                    type="button"
+                    onClick={() => editor.chain().focus().setTextAlign('left').run()}
+                    className={`p-2 rounded hover:bg-slate-200 transition-colors ${isActive({ textAlign: 'left' }) ? 'bg-slate-200 text-slate-900' : 'text-slate-600'}`}
+                    title="Align Left"
+                >
+                    <AlignLeft className="w-4 h-4" />
+                </button>
+                <button
+                    type="button"
+                    onClick={() => editor.chain().focus().setTextAlign('center').run()}
+                    className={`p-2 rounded hover:bg-slate-200 transition-colors ${isActive({ textAlign: 'center' }) ? 'bg-slate-200 text-slate-900' : 'text-slate-600'}`}
+                    title="Align Center"
+                >
+                    <AlignCenter className="w-4 h-4" />
+                </button>
+                <button
+                    type="button"
+                    onClick={() => editor.chain().focus().setTextAlign('right').run()}
+                    className={`p-2 rounded hover:bg-slate-200 transition-colors ${isActive({ textAlign: 'right' }) ? 'bg-slate-200 text-slate-900' : 'text-slate-600'}`}
+                    title="Align Right"
+                >
+                    <AlignRight className="w-4 h-4" />
+                </button>
+                <button
+                    type="button"
+                    onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+                    className={`p-2 rounded hover:bg-slate-200 transition-colors ${isActive({ textAlign: 'justify' }) ? 'bg-slate-200 text-slate-900' : 'text-slate-600'}`}
+                    title="Justify"
+                >
+                    <AlignJustify className="w-4 h-4" />
+                </button>
             </div>
             <EditorContent editor={editor} className="min-h-[150px]" />
-        </div>
+        </div >
     );
 }
