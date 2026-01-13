@@ -74,9 +74,12 @@ export default function GalleryDetailPage({ params }: PageProps) {
         visible: {
             y: 0,
             opacity: 1,
-            transition: { type: "spring", stiffness: 50 }
+            transition: { type: "spring", stiffness: 50 } as any
         }
     };
+
+    // Check if location data exists
+    const hasLocation = (destination.latitude && destination.longitude) || (destination.locations && Array.isArray(destination.locations) && destination.locations.length > 0);
 
     return (
         <motion.div
@@ -86,7 +89,7 @@ export default function GalleryDetailPage({ params }: PageProps) {
             className="bg-slate-50 min-h-screen pb-20"
         >
             {/* Header Section with subtle gradient */}
-            <div className="bg-white border-b border-slate-100 shadow-sm relative overflow-hidden">
+            <div className="bg-white border-b border-slate-100 shadow-sm relative overflow-hidden pt-20">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-teal-500 to-emerald-500"></div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 text-center relative z-10">
@@ -102,20 +105,14 @@ export default function GalleryDetailPage({ params }: PageProps) {
                     </motion.h1>
 
                     <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-slate-500 text-sm md:text-base">
-                        <div className="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-full">
-                            <Calendar className="w-4 h-4 text-slate-400" />
-                            <span className="font-medium">{new Date(destination.createdAt).toLocaleDateString()}</span>
-                        </div>
-                        {destination.latitude && destination.longitude && (
+                        {/* Date removed as per request */}
+                        {hasLocation && (
                             <div className="flex items-center gap-2 bg-teal-50 text-teal-700 px-3 py-1.5 rounded-full border border-teal-100">
                                 <MapPin className="w-4 h-4" />
                                 <span className="font-medium">Location Available</span>
                             </div>
                         )}
-                        <button className="flex items-center gap-2 hover:text-blue-600 transition-colors">
-                            <Share2 className="w-4 h-4" />
-                            Share
-                        </button>
+                        {/* Share Button Placeholder */}
                     </motion.div>
                 </div>
 
@@ -144,7 +141,7 @@ export default function GalleryDetailPage({ params }: PageProps) {
                 </motion.div>
 
                 {/* 3. Map Section */}
-                {destination.latitude && destination.longitude && (
+                {hasLocation && (
                     <motion.div variants={itemVariants} className="max-w-6xl mx-auto mb-20">
                         <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100 flex flex-col md:flex-row">
                             <div className="w-full md:w-1/3 p-8 md:p-12 bg-slate-50 flex flex-col justify-center border-b md:border-b-0 md:border-r border-slate-100">
@@ -157,24 +154,30 @@ export default function GalleryDetailPage({ params }: PageProps) {
                                     Discover exactly where this paradise is located on the map. Plan your route and get ready for an adventure.
                                 </p>
                                 <div className="space-y-3">
-                                    <div className="flex items-center gap-3 text-sm text-slate-600 bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
-                                        <MapPin className="w-5 h-5 text-red-500" />
-                                        <span className="font-mono">{destination.latitude.toFixed(6)}, {destination.longitude.toFixed(6)}</span>
-                                    </div>
-                                    <a
-                                        href={`https://www.google.com/maps/search/?api=1&query=${destination.latitude},${destination.longitude}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center w-full bg-slate-900 text-white py-3 rounded-xl font-medium hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20"
-                                    >
-                                        Open in Google Maps
-                                    </a>
+                                    {destination.latitude && (
+                                        <div className="flex items-center gap-3 text-sm text-slate-600 bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                                            <MapPin className="w-5 h-5 text-red-500" />
+                                            <span className="font-mono">{destination.latitude.toFixed(6)}, {destination.longitude.toFixed(6)}</span>
+                                        </div>
+                                    )}
+                                    {/* Link to first location if available */}
+                                    {(destination.latitude || (destination.locations && destination.locations.length > 0)) && (
+                                        <a
+                                            href={`https://www.google.com/maps/search/?api=1&query=${destination.latitude || destination.locations?.[0]?.lat},${destination.longitude || destination.locations?.[0]?.lng}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center justify-center w-full bg-slate-900 text-white py-3 rounded-xl font-medium hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20"
+                                        >
+                                            Open in Google Maps
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                             <div className="w-full md:w-2/3 h-[400px] md:h-auto relative">
                                 <MapView
                                     initialLat={destination.latitude}
                                     initialLng={destination.longitude}
+                                    locations={destination.locations}
                                 />
                                 {/* Overlay gradient for seamless edge */}
                                 <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-slate-50 to-transparent pointer-events-none hidden md:block"></div>
