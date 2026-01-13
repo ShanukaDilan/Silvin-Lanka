@@ -74,8 +74,8 @@ export default function MediaManagerPage() {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white">Media Manager</h1>
-                    <p className="text-slate-300 mt-1">Manage your uploaded files and clean up unused assets.</p>
+                    <h1 className="text-3xl font-bold text-slate-900">Media Manager</h1>
+                    <p className="text-slate-500 mt-1">Manage your uploaded files and clean up unused assets.</p>
                 </div>
 
                 <div className="flex gap-2">
