@@ -60,11 +60,11 @@ export default async function AdminDashboard() {
                     trend={{ value: "Assets", isPositive: true, label: "Total images" }}
                 />
                 <StatCard
-                    title="Site Visitors"
-                    value={stats.visitors}
+                    title="Active Users"
+                    value={stats.admins}
                     icon={Users}
                     color="teal"
-                    trend={{ value: "Traffic", isPositive: true, label: "Total page views" }}
+                    trend={{ value: "Admin", isPositive: true, label: "System users" }}
                 />
             </div>
 
@@ -107,6 +107,9 @@ export default async function AdminDashboard() {
                         </Link>
                         <Link href="/admin/reviews" className="block w-full text-left px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium border border-white/5">
                             Check Reviews
+                        </Link>
+                        <Link href="/admin/users" className="block w-full text-left px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium border border-white/5">
+                            Manage Users
                         </Link>
                     </div>
                 </div>

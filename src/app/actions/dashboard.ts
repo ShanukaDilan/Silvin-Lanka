@@ -4,24 +4,28 @@ import prisma from "@/lib/prisma";
 
 export async function getDashboardStats() {
     try {
-        const tourCount = await prisma.tour.count();
-        const reviewCount = await prisma.review.count();
-        const galleryCount = await prisma.destination.count();
-        const visitCount = await prisma.visit.count();
+        const [toursCount, reviewsCount, galleryCount, visitorsCount, adminsCount] = await Promise.all([
+            prisma.tour.count(),
+            prisma.review.count(),
+            prisma.destination.count(),
+            prisma.visit.count(),
+            prisma.admin.count()
+        ]);
 
         // Calculate trends (mock logic for now, or simple date comparison)
         // For simplicity in this iteration, we'll return raw counts and static mock trends
         // Real trend calculation requires comparing count where createdAt > 30 days ago vs prior
 
         return {
-            tours: tourCount,
-            reviews: reviewCount,
+            tours: toursCount,
+            reviews: reviewsCount,
             gallery: galleryCount,
-            visitors: visitCount
+            visitors: visitorsCount,
+            admins: adminsCount
         };
     } catch (error) {
         console.error("Error fetching dashboard stats:", error);
-        return { tours: 0, reviews: 0, gallery: 0, visitors: 0 };
+        return { tours: 0, reviews: 0, gallery: 0, visitors: 0, admins: 0 };
     }
 }
 

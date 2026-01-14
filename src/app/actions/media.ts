@@ -22,7 +22,10 @@ export type MediaResponse = {
     error?: string;
 };
 
+import { requireAuth } from "@/lib/auth-utils";
+
 export async function getMediaFiles(): Promise<MediaResponse> {
+    await requireAuth();
     const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
 
     // 1. Ensure directory exists
@@ -139,6 +142,7 @@ export async function getMediaFiles(): Promise<MediaResponse> {
 }
 
 export async function deleteMediaFile(filename: string) {
+    await requireAuth();
     try {
         const filePath = path.join(UPLOADS_DIR, filename);
         await fs.unlink(filePath);

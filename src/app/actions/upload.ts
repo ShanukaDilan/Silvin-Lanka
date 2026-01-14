@@ -3,7 +3,10 @@
 import { saveImage } from "@/lib/upload";
 import { revalidatePath } from "next/cache";
 
+import { requireAuth } from "@/lib/auth-utils";
+
 export async function uploadImageAction(formData: FormData) {
+    await requireAuth();
     const file = formData.get("file") as File;
 
     if (!file) {
@@ -21,6 +24,7 @@ export async function uploadImageAction(formData: FormData) {
 }
 
 export async function uploadImagesAction(formData: FormData) {
+    await requireAuth();
     const files = formData.getAll("files") as File[]; // Note: using "files" key
 
     if (!files || files.length === 0) {

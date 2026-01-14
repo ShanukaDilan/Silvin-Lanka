@@ -47,6 +47,11 @@ const sidebarItems = [
         icon: ImageIcon,
     },
     {
+        title: "Users",
+        href: "/admin/users",
+        icon: User,
+    },
+    {
         title: "Site Profile",
         href: "/admin/profile",
         icon: Settings,

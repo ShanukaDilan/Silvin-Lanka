@@ -41,7 +41,10 @@ export async function getSiteProfile() {
     }
 }
 
+import { requireAuth } from "@/lib/auth-utils";
+
 export async function updateSiteProfile(data: SiteProfileFormValues) {
+    await requireAuth();
     const result = siteProfileSchema.safeParse(data);
 
     if (!result.success) {

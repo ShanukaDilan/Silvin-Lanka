@@ -6,7 +6,10 @@ import { revalidatePath } from "next/cache";
 import { unlink } from "fs/promises";
 import path from "path";
 
+import { requireAuth } from "@/lib/auth-utils";
+
 export async function createDestination(data: DestinationFormValues) {
+    await requireAuth();
     const result = destinationSchema.safeParse(data);
 
     if (!result.success) {
@@ -38,6 +41,7 @@ export async function createDestination(data: DestinationFormValues) {
 }
 
 export async function updateDestination(id: string, data: DestinationFormValues) {
+    await requireAuth();
     const result = destinationSchema.safeParse(data);
 
     if (!result.success) {
@@ -93,6 +97,7 @@ export async function updateDestination(id: string, data: DestinationFormValues)
 }
 
 export async function deleteDestination(id: string) {
+    await requireAuth();
     try {
         // Fetch before delete
         const dest = await prisma.destination.findUnique({ where: { id } });

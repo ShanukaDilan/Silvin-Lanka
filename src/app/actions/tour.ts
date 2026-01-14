@@ -7,7 +7,10 @@ import { redirect } from "next/navigation";
 import { unlink } from "fs/promises";
 import path from "path";
 
+import { requireAuth } from "@/lib/auth-utils";
+
 export async function createTour(data: TourFormValues) {
+    await requireAuth();
     const result = tourSchema.safeParse(data);
 
     if (!result.success) {
@@ -34,6 +37,7 @@ export async function createTour(data: TourFormValues) {
 }
 
 export async function updateTour(id: string, data: TourFormValues) {
+    await requireAuth();
     const result = tourSchema.safeParse(data);
 
     if (!result.success) {
@@ -87,6 +91,7 @@ export async function updateTour(id: string, data: TourFormValues) {
 }
 
 export async function deleteTour(id: string) {
+    await requireAuth();
     try {
         // Get tour details before deletion to clean up images
         const tour = await prisma.tour.findUnique({ where: { id } });
