@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { ModernButton } from "@/components/ui/FormElements";
+import type { SidebarItemData, AdminUser } from "@/types/admin";
 
 // --- Configuration ---
 const SIDEBAR_ITEMS = [
@@ -32,7 +33,7 @@ const SIDEBAR_ITEMS = [
 ];
 
 // --- Sidebar Item Component ---
-function SidebarItem({ item, isActive, isCollapsed }: { item: any, isActive: boolean, isCollapsed?: boolean }) {
+function SidebarItem({ item, isActive, isCollapsed }: { item: SidebarItemData, isActive: boolean, isCollapsed?: boolean }) {
     return (
         <Link
             href={item.href}
@@ -58,7 +59,7 @@ function SidebarItem({ item, isActive, isCollapsed }: { item: any, isActive: boo
 }
 
 // --- Main Layout Shell ---
-export function AdminShell({ children, user }: { children: React.ReactNode, user?: any }) {
+export function AdminShell({ children, user }: { children: React.ReactNode, user?: AdminUser }) {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
     const pathname = usePathname();
 

@@ -131,7 +131,7 @@ export default function HomePageAdmin() {
         <div className="max-w-4xl mx-auto p-6 space-y-8">
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold text-slate-900">Customize Home Page</h1>
-                <ModernButton onClick={handleSubmit(onSubmit, (errors) => console.log("Form Errors:", errors))} disabled={saving}>
+                <ModernButton onClick={handleSubmit(onSubmit)} disabled={saving}>
                     {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
                     Save Changes
                 </ModernButton>
@@ -382,7 +382,7 @@ export default function HomePageAdmin() {
                 </div>
                 {/* Save Button Bottom */}
                 <div className="flex justify-end pt-6 border-t border-slate-200">
-                    <ModernButton onClick={handleSubmit(onSubmit, (errors) => console.log("Form Errors:", errors))} disabled={saving}>
+                    <ModernButton onClick={handleSubmit(onSubmit)} disabled={saving}>
                         {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
                         Save Changes
                     </ModernButton>
