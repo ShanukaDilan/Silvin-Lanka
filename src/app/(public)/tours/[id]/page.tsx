@@ -5,6 +5,7 @@ import Link from "next/link";
 import { TourGallery } from "@/components/public/TourGallery";
 import Image from "next/image";
 import TourMapWrapper from "@/components/public/TourMapWrapper";
+import type { Tour, TourLocation } from "@/types";
 
 interface TourDetailPageProps {
     params: Promise<{
@@ -26,49 +27,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
 
     return (
         <div className="bg-slate-900 min-h-screen pb-24 pt-20">
-            {/* Hero Gallery */}
-            {/* Hero Gallery */}
-
-            {/* Tour Title Overlay Content (Floating below gallery or integrated? ) 
-                Wait, the previous design had the title OVER the image. 
-                My TourGallery moves the image into a slider. 
-                The title overlay logic needs to be either IN TourGallery or preserving the overlay here.
-                Let's move the overlay logic INTO TourGallery OR overlay it here absolutely.
-                However, TourGallery has `div className="relative ..."`
-                If I put content here, it will be below.
-                
-                Actually, the cleanest way is to pass the title to TourGallery (which I did) 
-                BUT TourGallery currently only uses title for Alt text and Lightbox header.
-                It DOES NOT render the title overlay on the slider.
-                
-                I should probably UPDATE TourGallery to accept `children` or render the title overlay itself.
-                OR I render the overlay HERE, positioned absolutely over the TourGallery if I wrap it?
-                
-                Let's look at `TourGallery` code again.
-                It has `div className="relative h-[60vh] w-full group"`.
-                
-                I should probably render the Title/Info section BELOW the gallery or OVER it.
-                The previous design had it at the bottom of the image.
-                
-                Let's update `TourGallery.tsx` to accept and render the overlay content, 
-                OR just put the title details in the main content area below.
-                
-                Actually, standard modern design often has the Gallery separate, and Title below.
-                OR Title over the gallery.
-                
-                Let's look at the user request: "Make photos as a slider".
-                
-                If I remove the overlay from here, the Title is gone!
-                
-                I will add a `children` prop to `TourGallery` or better yet, 
-                keep the overlay logic in `page.tsx` but position it absolutely over the `TourGallery` wrapper?
-                
-                The `TourGallery` component returns a fragment `<> ... </>`.
-                The first element is the slider `div`.
-                
-                Let's wrap `TourGallery` in a relative div here, and put the overlay content inside.
-            */}
-
+            {/* Tour Gallery with Title Overlay */}
             <div className="relative">
                 <TourGallery images={images} title={tour.title} />
 
@@ -112,10 +71,10 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                             </div>
 
                             {/* Map Section */}
-                            {(tour as any).locations && Array.isArray((tour as any).locations) && ((tour as any).locations as any[]).length > 0 && (
+                            {tour.locations && Array.isArray(tour.locations) && ((tour.locations as any) as TourLocation[]).length > 0 && (
                                 <div>
                                     <h2 className="text-2xl font-bold text-slate-900 mb-4">Tour Route</h2>
-                                    <TourMapWrapper locations={(tour as any).locations as any[]} />
+                                    <TourMapWrapper locations={(tour.locations as any) as TourLocation[]} />
                                 </div>
                             )}
                         </div>

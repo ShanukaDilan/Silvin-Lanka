@@ -1,25 +1,17 @@
 import { getSiteProfile } from "@/app/actions/profile";
 import { Mail, Phone, MapPin, Facebook, Instagram } from "lucide-react";
 import Image from "next/image";
-import fs from "fs";
-import path from "path";
+import { validateImagePath } from "@/utils/image-validation";
 
 export const dynamic = "force-dynamic";
 
 export default async function ContactPage() {
     const profile = await getSiteProfile();
 
-    let heroImage = profile?.contactHeroImage || 'https://images.unsplash.com/photo-1534536281715-e28d76689b4d?q=80&w=2070&auto=format&fit=crop';
-
-    // Validate uploaded image existence
-    if (heroImage.startsWith('/uploads/')) {
-        const filePath = path.join(process.cwd(), 'public', heroImage);
-        if (!fs.existsSync(filePath)) {
-            heroImage = 'https://placehold.co/1920x600/1e293b/ffffff?text=Contact+Us';
-        }
-    }
-
-    const validHeroImage = heroImage;
+    const heroImage = validateImagePath(
+        profile?.contactHeroImage,
+        'https://images.unsplash.com/photo-1534536281715-e28d76689b4d?q=80&w=2070&auto=format&fit=crop'
+    );
 
     return (
         <div className="bg-white">
@@ -32,7 +24,7 @@ export default async function ContactPage() {
                     {/* Dynamic Hero Image */}
                     <div className="absolute inset-0">
                         <Image
-                            src={validHeroImage}
+                            src={heroImage}
                             alt="Contact Hero"
                             fill
                             className="object-cover opacity-60 mix-blend-overlay"

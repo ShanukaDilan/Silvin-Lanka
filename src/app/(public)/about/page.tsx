@@ -1,24 +1,21 @@
 import { getSiteProfile } from "@/app/actions/profile";
 import Image from "next/image";
-import fs from "fs";
-import path from "path";
+import { validateImagePath, sanitizeHtml } from "@/utils/image-validation";
 
 export const dynamic = "force-dynamic";
 
 export default async function AboutPage() {
     const profile = await getSiteProfile();
 
-    let heroImage = profile?.aboutHeroImage || 'https://images.unsplash.com/photo-1546708773-e529a6913435?q=80&w=2070&auto=format&fit=crop';
+    const heroImage = validateImagePath(
+        profile?.aboutHeroImage,
+        'https://images.unsplash.com/photo-1546708773-e529a6913435?q=80&w=2070&auto=format&fit=crop'
+    );
 
-    // Validate uploaded image existence
-    if (heroImage.startsWith('/uploads/')) {
-        const filePath = path.join(process.cwd(), 'public', heroImage);
-        if (!fs.existsSync(filePath)) {
-            heroImage = 'https://placehold.co/1920x600/1e293b/ffffff?text=About+Us';
-        }
-    }
-
-    const validHeroImage = heroImage;
+    // Sanitize HTML content to prevent XSS
+    const safeAboutText = sanitizeHtml(
+        profile?.aboutText || "<p>Welcome to Silvin Lanka. We are dedicated to providing the best travel experiences in Sri Lanka.</p>"
+    );
 
     return (
         <div className="bg-white">
@@ -31,7 +28,7 @@ export default async function AboutPage() {
                     {/* Dynamic Hero Image */}
                     <div className="absolute inset-0">
                         <Image
-                            src={validHeroImage}
+                            src={heroImage}
                             alt="About Hero"
                             fill
                             className="object-cover opacity-60 mix-blend-overlay"
@@ -66,7 +63,7 @@ export default async function AboutPage() {
 
                     <div
                         dangerouslySetInnerHTML={{
-                            __html: profile?.aboutText || "<p>Welcome to Silvin Lanka. We are dedicated to providing the best travel experiences in Sri Lanka.</p>"
+                            __html: safeAboutText
                         }}
                     />
                 </div>

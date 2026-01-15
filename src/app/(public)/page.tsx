@@ -26,7 +26,7 @@ export default async function HomePage() {
             <AnimatedSection delay={0.2}>
                 <WhyChooseUs
                     title={homeData?.whyChooseUsTitle}
-                    features={homeData?.whyChooseUsFeatures as any}
+                    features={(homeData?.whyChooseUsFeatures as any) || []}
                 />
             </AnimatedSection>
 
@@ -34,7 +34,7 @@ export default async function HomePage() {
                 <PopularDestinations
                     title={homeData?.destinationsTitle}
                     subtitle={homeData?.destinationsSubtitle}
-                    destinations={homeData?.popularDestinations as any}
+                    destinations={(homeData?.popularDestinations as any) || []}
                 />
             </AnimatedSection>
 
@@ -53,7 +53,7 @@ export default async function HomePage() {
                 <Testimonials
                     title={homeData?.testimonialsTitle}
                     subtitle={homeData?.testimonialsSubtitle}
-                    testimonials={homeData?.testimonials as any}
+                    testimonials={(homeData?.testimonials as any) || []}
                 />
             </AnimatedSection>
 

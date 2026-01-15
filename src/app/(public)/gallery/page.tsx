@@ -3,8 +3,8 @@ import { getSiteProfile } from "@/app/actions/profile";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, MapPin } from "lucide-react";
-import fs from "fs";
-import path from "path";
+import { validateImagePath } from "@/utils/image-validation";
+import type { Destination } from "@/types";
 
 export const dynamic = "force-dynamic";
 
@@ -12,17 +12,10 @@ export default async function GalleryPage() {
     const destinations = await getDestinations();
     const profile = await getSiteProfile();
 
-    let heroImage = profile?.galleryHeroImage || 'https://images.unsplash.com/photo-1546708773-e529a6913435?q=80&w=2070&auto=format&fit=crop';
-
-    // Validate uploaded image existence
-    if (heroImage.startsWith('/uploads/')) {
-        const filePath = path.join(process.cwd(), 'public', heroImage);
-        if (!fs.existsSync(filePath)) {
-            heroImage = 'https://placehold.co/1920x600/1e293b/ffffff?text=Gallery';
-        }
-    }
-
-    const validHeroImage = heroImage;
+    const heroImage = validateImagePath(
+        profile?.galleryHeroImage,
+        'https://images.unsplash.com/photo-1546708773-e529a6913435?q=80&w=2070&auto=format&fit=crop'
+    );
 
     return (
         <div className="bg-white min-h-screen">
@@ -35,7 +28,7 @@ export default async function GalleryPage() {
                     {/* Dynamic Hero Image */}
                     <div className="absolute inset-0">
                         <Image
-                            src={validHeroImage}
+                            src={heroImage}
                             alt="Gallery Hero"
                             fill
                             className="object-cover opacity-60 mix-blend-overlay"
@@ -60,11 +53,11 @@ export default async function GalleryPage() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
-                    {destinations.map((dest: any) => (
+                    {destinations.map((dest) => (
                         <div key={dest.id} className="break-inside-avoid bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-slate-100 group">
-                            <div className="relative relative w-full aspect-[4/3] overflow-hidden">
+                            <div className="relative w-full aspect-[4/3] overflow-hidden">
                                 <Image
-                                    src={dest.imageUrl}
+                                    src={dest.imageUrl || '/images/placeholder.jpg'}
                                     alt={dest.title}
                                     fill
                                     className="object-cover group-hover:scale-105 transition-transform duration-500"

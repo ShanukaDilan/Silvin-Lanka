@@ -3,8 +3,8 @@ import { ReviewForm } from "@/components/reviews/ReviewForm";
 import { Star, Facebook, Instagram, Video, Quote, Sparkles } from "lucide-react";
 import { getSiteProfile } from "@/app/actions/profile";
 import Image from "next/image";
-import fs from "fs";
-import path from "path";
+import { validateImagePath } from "@/utils/image-validation";
+import type { Review } from "@/types";
 
 export const dynamic = "force-dynamic";
 
@@ -12,17 +12,10 @@ export default async function ReviewsPage() {
     const reviews = await getApprovedReviews();
     const profile = await getSiteProfile();
 
-    let heroImage = profile?.reviewsHeroImage || 'https://images.unsplash.com/photo-1506466010722-395aa2bef877?q=80&w=2070&auto=format&fit=crop';
-
-    // Validate uploaded image existence
-    if (heroImage.startsWith('/uploads/')) {
-        const filePath = path.join(process.cwd(), 'public', heroImage);
-        if (!fs.existsSync(filePath)) {
-            heroImage = 'https://placehold.co/1920x600/f59e0b/ffffff?text=Guest+Reviews';
-        }
-    }
-
-    const validHeroImage = heroImage;
+    const heroImage = validateImagePath(
+        profile?.reviewsHeroImage,
+        'https://images.unsplash.com/photo-1506466010722-395aa2bef877?q=80&w=2070&auto=format&fit=crop'
+    );
 
     return (
         <div className="bg-white min-h-screen">
@@ -35,7 +28,7 @@ export default async function ReviewsPage() {
                     {/* Dynamic Hero Image */}
                     <div className="absolute inset-0">
                         <Image
-                            src={validHeroImage}
+                            src={heroImage}
                             alt="Reviews Hero"
                             fill
                             className="object-cover opacity-60 mix-blend-overlay"
@@ -62,7 +55,7 @@ export default async function ReviewsPage() {
                         <h2 className="text-2xl font-bold text-slate-900">What our guests say</h2>
 
                         <div className="space-y-6">
-                            {reviews.map((review: any) => (
+                            {reviews.map((review) => (
                                 <div key={review.id} className="bg-slate-50 p-8 rounded-2xl relative">
                                     <Quote className="absolute top-8 right-8 w-8 h-8 text-slate-200" />
                                     <div className="flex items-center gap-1 text-amber-500 mb-4">

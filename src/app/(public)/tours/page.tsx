@@ -3,8 +3,8 @@ import { getSiteProfile } from "@/app/actions/profile";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Clock, MapPin, Sparkles, Star, Image as ImageIcon } from "lucide-react";
-import fs from "fs";
-import path from "path";
+import { validateImagePath } from "@/utils/image-validation";
+import type { Tour } from "@/types";
 
 export const dynamic = "force-dynamic";
 
@@ -12,18 +12,10 @@ export default async function ToursPage() {
     const tours = await getTours();
     const profile = await getSiteProfile();
 
-    let heroImage = profile?.toursHeroImage || 'https://images.unsplash.com/photo-1546708773-e529a6913435?q=80&w=2070&auto=format&fit=crop';
-
-    // Validate uploaded image existence
-    if (heroImage.startsWith('/uploads/')) {
-        const filePath = path.join(process.cwd(), 'public', heroImage);
-        if (!fs.existsSync(filePath)) {
-            // console.log(`Hero image not found at: ${filePath}, falling back.`);
-            heroImage = 'https://placehold.co/1920x600/1e293b/ffffff?text=Explore+Sri+Lanka';
-        }
-    }
-
-    const validHeroImage = heroImage;
+    const heroImage = validateImagePath(
+        profile?.toursHeroImage,
+        'https://images.unsplash.com/photo-1546708773-e529a6913435?q=80&w=2070&auto=format&fit=crop'
+    );
 
     return (
         <div className="bg-slate-50 min-h-screen">
@@ -36,7 +28,7 @@ export default async function ToursPage() {
                     {/* Dynamic Hero Image */}
                     <div className="absolute inset-0">
                         <Image
-                            src={validHeroImage}
+                            src={heroImage}
                             alt="Tours Hero"
                             fill
                             className="object-cover opacity-60 mix-blend-overlay"
@@ -62,7 +54,7 @@ export default async function ToursPage() {
             {/* Content Section */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-20 pb-24">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
-                    {tours.map((tour: any) => (
+                    {tours.map((tour) => (
                         <div key={tour.id} className="group bg-white rounded-3xl overflow-hidden shadow-lg shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500 border border-slate-100 flex flex-col h-full hover:-translate-y-2">
                             {/* Card Image */}
                             <div className="relative aspect-[4/3] overflow-hidden">
