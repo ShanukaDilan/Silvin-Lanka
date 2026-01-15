@@ -5,6 +5,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import DOMPurify from 'isomorphic-dompurify';
 
 /**
  * Validates an image path and returns a safe fallback if needed
@@ -52,11 +53,6 @@ export function sanitizeHtml(html: string | null | undefined): string {
     if (!html) {
         return '';
     }
-
-    // For server-side rendering, we need isomorphic-dompurify
-    // which works in both browser and Node.js environments
-    const createDOMPurify = require('isomorphic-dompurify');
-    const DOMPurify = createDOMPurify();
 
     // Configure DOMPurify to allow common safe HTML tags
     const clean = DOMPurify.sanitize(html, {
