@@ -16,6 +16,7 @@ export const siteProfileSchema = z.object({
     navColor: z.string().regex(/^#[0-9a-fA-F]{6}$/, "Invalid hex color").default("#ffffff"),
     email: z.string().email("Invalid email address"),
     phone: z.string().min(8, "Phone number must be at least 8 characters"),
+    whatsappNumber: z.string().min(8, "WhatsApp number must be at least 8 characters").optional().or(z.literal("")),
     address: z.string().optional(),
     facebookUrl: z.string().url("Invalid URL").optional().or(z.literal("")),
     instagramUrl: z.string().url("Invalid URL").optional().or(z.literal("")),

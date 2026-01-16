@@ -24,6 +24,7 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
             aboutText: initialData?.aboutText || "",
             email: initialData?.email || "",
             phone: initialData?.phone || "",
+            whatsappNumber: initialData?.whatsappNumber || "",
             address: initialData?.address || "",
             facebookUrl: initialData?.facebookUrl || "",
             instagramUrl: initialData?.instagramUrl || "",
@@ -472,6 +473,21 @@ export function SiteProfileForm({ initialData }: SiteProfileFormProps) {
                         <p className="text-red-500 text-sm mt-1">{form.formState.errors.phone.message}</p>
                     )}
                 </div>
+            </div>
+
+            <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">WhatsApp Number</label>
+                <input
+                    id="whatsappNumber"
+                    type="text"
+                    placeholder="+94 77 123 4567"
+                    className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+                    {...form.register("whatsappNumber")}
+                />
+                <p className="text-xs text-slate-500 mt-1">Dedicated WhatsApp number for customer inquiries (optional, uses phone if not set)</p>
+                {form.formState.errors.whatsappNumber && (
+                    <p className="text-red-500 text-sm mt-1">{form.formState.errors.whatsappNumber.message}</p>
+                )}
             </div>
 
             <div>

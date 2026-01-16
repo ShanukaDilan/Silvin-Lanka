@@ -1,7 +1,8 @@
 import { getSiteProfile } from "@/app/actions/profile";
-import { Mail, Phone, MapPin, Facebook, Instagram } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Instagram, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import { validateImagePath } from "@/utils/image-validation";
+import { ContactForm } from "@/components/contact/ContactForm";
 
 export const dynamic = "force-dynamic";
 
@@ -99,25 +100,58 @@ export default async function ContactPage() {
                         </div>
                     </div>
 
-                    {/* Contact Form Placeholder */}
-                    <div className="bg-slate-50 p-8 rounded-2xl border border-slate-100">
-                        <form className="space-y-6">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
-                                <input type="text" className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500" />
+                    <div className="space-y-6">
+                        {/* WhatsApp Contact Card */}
+                        <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-2xl border border-green-200 shadow-lg">
+                            <div className="text-center space-y-6">
+                                {/* WhatsApp Icon */}
+                                <div className="inline-flex p-5 bg-green-500 rounded-full shadow-lg">
+                                    <MessageCircle className="w-12 h-12 text-white" />
+                                </div>
+
+                                <div>
+                                    <h2 className="text-3xl font-bold text-slate-900 mb-3">
+                                        Chat with us on WhatsApp
+                                    </h2>
+                                    <p className="text-slate-600 text-lg leading-relaxed">
+                                        Get instant responses and personalized tour recommendations!
+                                    </p>
+                                </div>
+
+                                {/* WhatsApp Button */}
+                                <a
+                                    href={(() => {
+                                        // Use whatsappNumber if available, otherwise fall back to phone
+                                        const phone = profile?.whatsappNumber || profile?.phone || "+94771234567";
+                                        // Remove all non-numeric characters except +
+                                        const cleanPhone = phone.replace(/[^\d+]/g, '');
+                                        // Pre-filled message
+                                        const message = encodeURIComponent("Hi! I'm interested in learning more about your tours.");
+                                        return `https://wa.me/${cleanPhone}?text=${message}`;
+                                    })()}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-3 px-8 py-4 bg-green-500 text-white rounded-xl font-semibold text-lg hover:bg-green-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 transform"
+                                >
+                                    <MessageCircle className="w-6 h-6" />
+                                    Start WhatsApp Chat
+                                </a>
+
+                                <div className="pt-6 border-t border-green-200">
+                                    <p className="text-sm text-slate-500 mb-2">Available on WhatsApp</p>
+                                    <p className="text-lg font-semibold text-slate-700">
+                                        {profile?.whatsappNumber || profile?.phone || "+94 77 123 4567"}
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                                <input type="email" className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
-                                <textarea rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500" />
-                            </div>
-                            <button type="button" className="w-full py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
-                                Send Message
-                            </button>
-                        </form>
+                        </div>
+
+                        {/* Contact Form */}
+                        <div className="bg-slate-50 p-8 rounded-2xl border border-slate-200">
+                            <h3 className="text-2xl font-bold text-slate-900 mb-4">Or Send Us a Message</h3>
+                            <p className="text-slate-600 mb-6">Fill out the form below and we'll get back to you soon.</p>
+                            <ContactForm />
+                        </div>
                     </div>
                 </div>
             </div>

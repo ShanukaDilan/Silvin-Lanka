@@ -25,8 +25,8 @@ ENV DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy"
 ENV NEXTAUTH_SECRET="dummy_secret_for_build"
 ENV NEXTAUTH_URL="http://localhost:3000"
 
-# Add openssl for Prisma
-RUN apk add --no-cache openssl
+# Add openssl for Prisma - update repos first
+RUN apk update && apk add --no-cache openssl openssl-dev
 
 RUN npx prisma generate
 RUN npm run build
@@ -43,7 +43,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # Install openssl for Prisma runtime
-RUN apk add --no-cache openssl
+RUN apk update && apk add --no-cache openssl openssl-dev
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma

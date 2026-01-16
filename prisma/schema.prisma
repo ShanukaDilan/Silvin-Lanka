@@ -32,6 +32,7 @@ model SiteProfile {
   reviewsHeroColor String?  @default("#f59e0b")
   email            String
   phone            String
+  whatsappNumber   String?
   address          String?
   facebookUrl      String?
   instagramUrl     String?
@@ -107,4 +108,21 @@ model HomePage {
   testimonialsSubtitle  String   @default("Real stories from real travelers.")
   testimonials          Json?
   updatedAt             DateTime @updatedAt
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  ARCHIVED
+}
+
+model ContactSubmission {
+  id        String        @id @default(uuid())
+  name      String
+  email     String
+  phone     String?
+  message   String        @db.Text
+  status    ContactStatus @default(NEW)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }

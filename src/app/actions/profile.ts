@@ -28,6 +28,7 @@ export async function getSiteProfile() {
             reviewsHeroColor: '#f59e0b',
             email: 'info@silvinlanka.com',
             phone: '+94 77 123 4567',
+            whatsappNumber: '+94 77 123 4567',
             address: '123, Main Street, Colombo, Sri Lanka',
             facebookUrl: '',
             instagramUrl: '',
